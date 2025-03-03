@@ -34,7 +34,7 @@ class _SearchScreenState extends State<SearchScreen> {
       return;
     }
     final List<Map<String, dynamic>> searchData =
-        await _apiService.getAllMovie();
+        await _apiService.searchMovies(_searchController.text);
 
     setState(() {
       _searchResult = searchData.map((e) => Movie.fromJson(e)).toList();
@@ -43,6 +43,36 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Search'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child: Row(
+                children: [
+                  TextField(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.search),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

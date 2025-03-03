@@ -8,7 +8,7 @@ class ApiService {
       'fee49051588344cb79d7ef336570d908'; // Ganti dengan API Key TMDB
 
   // Semua Film (Discover)
-  static Future<List<Movie>> fetchAllMovies() async {
+  static Future<List<Movie>> getAllMovies() async {
     final response = await http.get(
       Uri.parse(
           '$_baseUrl/discover/movie?api_key=$_apiKey&language=en-US&page=1'),
@@ -40,19 +40,13 @@ class ApiService {
     }
   }
 
-  Future<List<Movie>> searchMovies(String query) async {
+  Future<List<Map<String, dynamic>>> searchMovies(String query) async {
     final response = await http.get(
       Uri.parse('$_baseUrl/search/movie?api_key=$_apiKey&query=$query'),
     );
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return (data['results'] as List)
-          .map((json) => Movie.fromJson(json))
-          .toList();
-    } else {
-      throw Exception('Gagal mencari film');
-    }
+    final data = json.decode(response.body);
+    return List<Map<String, dynamic>>.from(data['results']);
   }
 
   // Film Populer

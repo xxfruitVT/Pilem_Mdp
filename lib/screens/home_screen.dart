@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _allMovies = ApiService.fetchAllMovies();
+    _allMovies = ApiService.getAllMovies();
     _trendingMovies = ApiService.fetchTrendingMovies();
     _popularMovies = ApiService.fetchPopularMovies();
   }
