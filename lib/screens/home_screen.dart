@@ -52,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: movies.length,
                 itemBuilder: (context, index) {
                   final movie = movies[index];
-
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
