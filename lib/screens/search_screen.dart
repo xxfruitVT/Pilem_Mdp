@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pilem1/models/movie.dart';
+import 'package:pilem1/screens/detail_screen.dart';
 import 'package:pilem1/services/api_service.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -61,15 +62,49 @@ class _SearchScreenState extends State<SearchScreen> {
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: Row(
-                children: [
-                  TextField(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.search),
-                  ),
+                children: <Widget>[
+                  TextField(
+                    controller: _searchController,
+                    decoration: const InputDecoration(
+                      hintText: 'Search Movie...',
+                      border: InputBorder.none,
+                    ),
+                  )
                 ],
               ),
-            )
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: _searchResult.length,
+                  itemBuilder: (context, index) {
+                    final Movie movie = _searchResult[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: ListTile(
+                        leading: Image.network(
+                          movie.posterPath != ''
+                              ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
+                              : 'https://placehold.co/50x75?text=No_Image',
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        ),
+                        title: Text(movie.title),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailScreen(movie: movie),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }),
+            ),
           ],
         ),
       ),
